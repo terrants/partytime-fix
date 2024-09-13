@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - PartyTime</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <style>
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1c1c1c;
+            background-color: #f5f0e8; /* Changed to a light beige color */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #151515;
+            padding: 1rem 2rem;
+            position: relative;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ea1d76;
+            line-height: 1;
+            z-index: 2;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+            text-decoration: none;
+        }
+
+        .nav-links li a {
+            color: #d0d0d0;
+            font-size: 20px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-links li a:hover {
+            color: #ea1d76;
+            transform: scale(1.1);
+            display: inline-block;
+            
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            z-index: 1001; /* Ensure it's above the menu */
+            transition: all 0.3s ease;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: #d0d0d0;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                height: 100vh;
+                background: linear-gradient(to bottom, #151515 0%, rgba(21, 21, 21, 0.9) 100%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transform: translateY(-100%);
+                transition: transform 0.5s ease-in;
+                padding: 2rem;
+                z-index: 1000; /* Ensure the menu is above other content */
+            }
+
+            .nav-links li {
+                opacity: 0;
+                margin: 1rem 0;
+            }
+
+            .nav-links li a {
+                color: #f5f4f2;
+                font-size: 24px;
+            }
+
+            .nav-links li a:hover {
+                color: #ea1d76;
+                transform: scale(1.1);
+                display: inline-block;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            .toggle .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+                background-color: #f5f4f2;
+            }
+
+            .toggle .line2 {
+                opacity: 0;
+            }
+
+            .toggle .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+                background-color: #f5f4f2;
+            }
+
+            /* This ensures the menu is hidden by default on mobile */
+            body:not(.nav-active) .nav-links {
+                transform: translateY(-100%);
+                transition: none;
+            }
+
+            /* This animates the menu only when it's actively toggled */
+            body.nav-active .nav-links {
+                transform: translateY(0%);
+                transition: transform 0.5s ease-in;
+            }
+        }
+
+        @keyframes navLinkFade {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #f5f0e8;
+            color: #1c1c1c;
+            position: relative;
+            padding-bottom: 30px;
+            font-size: 14px;
+            border-top: 1px solid #151515;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 0.5rem;
+        }
+
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ea1d76;
+            line-height: 1;
+            position: absolute;
+            bottom: 30px;
+            left: 0.5rem;
+            padding: 0.25rem;
+        }
+
+        .footer-tagline {
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            flex-grow: 1;
+            margin: 0 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 3em;
+            padding: 0.5em;
+            line-height: 1.2;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .social-links {
+            margin-bottom: 0.125rem;
+        }
+
+        .social-links a {
+            color: #1c1c1c;
+            font-size: 16px;
+            margin-left: 5px;
+        }
+
+        .footer-credit {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .footer-bottom {
+            background-color: #151515;
+            color: #f5f4f2;
+            text-align: center;
+            padding: 0.25rem 0;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-bottom p {
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            nav ul li {
+                margin-left: 0;
+                margin-right: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding-top: 60px; /* Add space for the logo at the top */
+            }
+
+            .footer-logo {
+                position: absolute;
+                top: 0.5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: auto;
+                font-size: 16px;
+            }
+
+            .footer-tagline {
+                font-size: 10px;
+                min-height: 2.5em;
+                margin-bottom: 0.5rem;
+            }
+
+            .footer-right {
+                text-align: center;
+            }
+
+            .social-links a {
+                font-size: 14px;
+            }
+
+            .footer-credit,
+            .footer-bottom p {
+                font-size: 9px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .description p, .what-we-do p {
+                font-size: 16px;
+            }
+
+            .feature-image {
+                height: 300px;
+            }
+
+            footer {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            .description p, .what-we-do p {
+                font-size: 14px;
+            }
+
+            .feature-image {
+                height: 250px;
+            }
+
+            footer {
+                font-size: 10px;
+                padding-bottom: 25px;
+            }
+
+            .footer-logo {
+                font-size: 14px;
+            }
+
+            .footer-tagline {
+                font-size: 9px;
+                min-height: 2em;
+            }
+
+            .social-links a {
+                font-size: 12px;
+            }
+
+            .footer-credit,
+            .footer-bottom p {
+                font-size: 8px;
+            }
+
+            .footer-bottom {
+                padding: 0.2rem 0;
+            }
+        }
+
+        /* About Page Specific Styles */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        h1 {
+            font-size: 53px;
+            font-weight: 300;
+            color: #1c1c1c;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #ea1d76;
+            color: #f5f4f2;
+            padding: 1.2rem 2.5rem;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 15px; /* Increased from 5px for a less boxy idle state */
+            transition: all 0.3s ease;
+            border: 3px solid #ea1d76;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: #f5f4f2;
+            color: #ea1d76;
+            border-radius: 50px; /* Remains very rounded on hover */
+        }
+
+        .counters {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .counter-item {
+            text-align: center;
+            margin: 0 1.5rem;
+        }
+
+        .counter-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ea1d76;
+        }
+
+        .counter-label {
+            font-size: 1rem;
+            color: #151515;
+            margin-top: 0.5rem;
+        }
+
+        .about-content, .what-we-do {
+            margin-bottom: 4rem;
+        }
+
+        .description p, .what-we-do p {
+            font-size: 18px;
+            margin-bottom: 0.5em;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: #ea1d76;
+            margin-bottom: 1rem;
+        }
+
+        .feature-image {
+            width: 100%;
+            height: 400px;
+            background-image: url("public/external/tq_pgymzlwb6_-6kfr-800h.png");
+            background-size: cover;
+            background-position: center;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            nav ul li {
+                margin-left: 0;
+                margin-right: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .social-links {
+                margin-bottom: 1rem;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .description p, .what-we-do p {
+                font-size: 16px;
+            }
+
+            .feature-image {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">PARTY<br>TIME.</a>
+            <ul class="nav-links">
+                <li><a href="work.html">Services</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>We Create Brand Action</h1>
+            <div class="counters">
+                <div class="counter-item">
+                    <div class="counter-number" id="events-counter">0</div>
+                    <div class="counter-label">Events</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" id="customers-counter">0</div>
+                    <div class="counter-label">Customers</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" id="experience-counter">0</div>
+                    <div class="counter-label">Years of Experience</div>
+                </div>
+            </div>
+            <a href="contact.html" class="cta-button">LET'S DO SOMETHING.</a>
+        </section>
+
+        <section class="about-content">
+            <div class="description">
+                <p>Hey there, welcome to PartyTime – where every celebration turns into an unforgettable masterpiece! We're the folks who turn your wildest event dreams into reality, whether you're throwing a backyard bash, a swanky fundraiser, or a wedding fit for royalty.</p>
+                <p>At PartyTime, we're all about going above and beyond. Sure, we'll help you pick out the perfect theme and set up a killer marquee party that'll have your guests talking for ages. But we don't stop there. We've got an epic lineup of entertainment options too – from live bands to DJs to full-blown concerts under the stars!</p>
+            </div>
+        </section>
+
+        <section class="what-we-do">
+            <h2>What We Do</h2>
+            <p>And let's not forget about the little details that make a big difference. Our bespoke catering will have your taste buds doing a happy dance, and our themed props will transport you to another world. Oh, and our graphic designers? They whip up invitations and printworks that'll have your guests RSVP-ing faster than you can say 'PartyTime!'</p>
+            <p>But wait, there's more! We've got fundraisers that not only raise cash but also raise spirits, because giving back should always be fun. And when it comes to setting the mood, our sound and lighting crew are top-notch, ensuring every moment is bathed in just the right amount of sparkle.</p>
+            <p>So, if you're ready to turn your event from 'meh' to 'OMG', you know who to call – PartyTime! Let's make memories that'll last a lifetime, together.</p>
+            <div class="feature-image"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-logo">
+            PARTY<br>TIME.
+        </div>
+        <div class="footer-content">
+            <p class="footer-tagline">TRANSFORMING MOMENTS INTO MOVEMENTS</p>
+            <div class="footer-right">
+                <div class="social-links">
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <p class="footer-credit">© terrence made this</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>THE END.</p>
+        </div>
+    </footer>
+
+    <script>
+        const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+            const body = document.body;
+
+            burger.addEventListener('click', () => {
+                // Toggle Nav
+                body.classList.toggle('nav-active');
+
+                // Animate Links
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
+
+                // Burger Animation
+                burger.classList.toggle('toggle');
+            });
+
+            // Close menu when a link is clicked
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    body.classList.remove('nav-active');
+                    burger.classList.remove('toggle');
+                    navLinks.forEach(link => {
+                        link.style.animation = '';
+                    });
+                });
+            });
+        }
+
+        navSlide();
+
+        // Counter Animation
+        function animateCounter(elementId, finalValue, duration) {
+            const element = document.getElementById(elementId);
+            let startTime = null;
+            const startValue = 0;
+
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+                const value = Math.floor(progress * (finalValue - startValue) + startValue);
+                element.textContent = value.toLocaleString();
+
+                if (progress < 1) {
+                    requestAnimationFrame(animation);
+                }
+            }
+
+            requestAnimationFrame(animation);
+        }
+
+        // Start counter animations when the page loads
+        window.addEventListener('load', () => {
+            animateCounter('events-counter', 500, 2000);
+            animateCounter('customers-counter', 10000, 2000);
+            animateCounter('experience-counter', 15, 2000);
+        });
+    </script>
+</body>
+</html>

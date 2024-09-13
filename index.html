@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="english">
+
+<head>
+  <title>Party Time</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, sans-serif;
+      line-height: 1.6;
+      color: var(--dl-color-theme-neutral-dark, #333);
+      background-color: var(--dl-color-theme-neutral-light, #f4f4f4);
+    }
+
+
+    .home-container {
+      width: 100%;
+      display: flex;
+      overflow: auto;
+      min-height: 100vh;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .home-home {
+      width: 100%;
+      display: flex;
+      position: relative;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: #151515;
+      position: relative;
+      padding: 1rem 2rem;
+
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      color: #ea1d76;
+      line-height: 1;
+      z-index: 2;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      gap: 1rem;
+      display: flex;
+      list-style: none;
+      text-decoration: none;
+    }
+
+    .nav-links li {
+      text-decoration: none;
+    }
+
+    .nav-links li a {
+      color: #d0d0d0;
+      font-size: 20px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .nav-links li a:hover {
+      color: #ea1d76;
+      transform: scale(1.1);
+      display: inline-block;
+
+    }
+
+    .burger {
+      display: none;
+      cursor: pointer;
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      z-index: 1001;
+      /* Ensure it's above the menu */
+      transition: all 0.3s ease;
+    }
+
+    .burger div {
+      width: 25px;
+      height: 3px;
+      background-color: #d0d0d0;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+
+    @media screen and (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        background: linear-gradient(to bottom, #151515 0%, rgba(21, 21, 21, 0.9) 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(-100%);
+        transition: transform 0.5s ease-in;
+        padding: 2rem;
+        z-index: 1000;
+        /* Ensure the menu is above other content */
+      }
+
+      .nav-links li {
+        opacity: 0;
+        margin: 1rem 0;
+      }
+
+      .nav-links li a {
+        color: #f5f4f2;
+        font-size: 24px;
+      }
+
+      .nav-links li a:hover {
+        color: #ea1d76;
+        transform: scale(1.1);
+        display: inline-block;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .toggle .line1 {
+        transform: rotate(-45deg) translate(-5px, 6px);
+        background-color: #f5f4f2;
+      }
+
+      .toggle .line2 {
+        opacity: 0;
+      }
+
+      .toggle .line3 {
+        transform: rotate(45deg) translate(-5px, -6px);
+        background-color: #f5f4f2;
+      }
+
+      /* This ensures the menu is hidden by default on mobile */
+      body:not(.nav-active) .nav-links {
+        transform: translateY(-100%);
+        transition: none;
+      }
+
+      /* This animates the menu only when it's actively toggled */
+      body.nav-active .nav-links {
+        transform: translateY(0%);
+        transition: transform 0.5s ease-in;
+      }
+    }
+
+    @keyframes navLinkFade {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+
+    /* Main content */
+    .home-image1 {
+      width: 100%;
+      max-height: 600px;
+      object-fit: cover;
+    }
+
+    .home-main1 {
+      width: 100%;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .home-text10 {
+      max-width: 800px;
+      text-align: center;
+    }
+
+    /* Image section */
+    .home-main2 {
+      width: 100%;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .home-frame3 {
+      width: 100%;
+      max-width: 1218px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .home-image-container {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      overflow: hidden;
+    }
+
+    .home-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .home-image-button {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      padding: 10px 20px;
+      background-color: rgba(234, 29, 118, 0.8);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: transform 0.3s ease, background-color 0.3s;
+      opacity: 0;
+    }
+
+    .home-image-container:hover .home-image {
+      transform: scale(1.05);
+    }
+
+    .home-image-container:hover .home-image-button {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .home-image-button:hover {
+      background-color: rgba(234, 29, 118, 1);
+    }
+
+
+    /* Footer Styles */
+    footer {
+      background-color: #f5f0e8;
+      color: #1c1c1c;
+      position: relative;
+      padding-bottom: 30px;
+      font-size: 14px;
+      border-top: 1px solid #151515;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 0.5rem;
+    }
+
+    .footer-logo {
+      font-size: 18px;
+      font-weight: 900;
+      color: #ea1d76;
+      line-height: 1;
+      position: absolute;
+      bottom: 30px;
+      left: 0.5rem;
+      padding: 0.25rem;
+    }
+
+    .footer-tagline {
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      flex-grow: 1;
+      margin: 0 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3em;
+      padding: 0.5em;
+      line-height: 1.2;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+    .social-links {
+      margin-bottom: 0.125rem;
+    }
+
+    .social-links a {
+      color: #1c1c1c;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+
+    .footer-credit {
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .footer-bottom {
+      background-color: #151515;
+      color: #f5f4f2;
+      text-align: center;
+      padding: 0.25rem 0;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .footer-bottom p {
+      font-weight: bold;
+      font-size: 10px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+      }
+
+      nav ul {
+        margin-top: 1rem;
+      }
+
+      nav ul li {
+        margin-left: 0;
+        margin-right: 1rem;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-top: 60px;
+        /* Add space for the logo at the top */
+      }
+
+      .footer-logo {
+        position: absolute;
+        top: 0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: auto;
+        font-size: 16px;
+      }
+
+      .footer-tagline {
+        font-size: 10px;
+        min-height: 2.5em;
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-right {
+        text-align: center;
+      }
+
+      .social-links a {
+        font-size: 14px;
+      }
+
+      .footer-credit,
+      .footer-bottom p {
+        font-size: 9px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .description p,
+      .what-we-do p {
+        font-size: 16px;
+      }
+
+      .feature-image {
+        height: 300px;
+      }
+
+      footer {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 30px;
+      }
+
+      .description p,
+      .what-we-do p {
+        font-size: 14px;
+      }
+
+      .feature-image {
+        height: 250px;
+      }
+
+      footer {
+        font-size: 10px;
+        padding-bottom: 25px;
+      }
+
+      .footer-logo {
+        font-size: 14px;
+      }
+
+      .footer-tagline {
+        font-size: 9px;
+        min-height: 2em;
+      }
+
+      .social-links a {
+        font-size: 12px;
+      }
+
+      .footer-credit,
+      .footer-bottom p {
+        font-size: 8px;
+      }
+
+      .footer-bottom {
+        padding: 0.2rem 0;
+      }
+    }
+
+
+
+    .home-frame2 {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      .home-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .home-nav-links {
+        margin-top: 1rem;
+      }
+
+      .home-image-container {
+        height: 300px;
+      }
+
+      .home-text10,
+      .home-text12,
+      .home-text22,
+      .home-text24 {
+        font-size: 0.9em;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .home-text26 {
+        font-size: 1.2rem;
+      }
+
+      .home-nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .home-image-container {
+        height: 200px;
+      }
+
+      .home-image-button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+
+
+    .home-hero-container {
+      position: relative;
+      width: 100%;
+    }
+
+    /* Style for the "PARTY TIME" button */
+    .home-hero-title {
+      position: absolute;
+      top: 49%;
+      left: 50%;
+      transform: translate(-50%, -100%);
+      font-size: 3.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      background-color: transparent;
+      padding: 30px 100px;
+      border: 3px solid white;
+      border-radius: 9999px;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+
+    .home-hero-title-content,
+    .home-hero-title-book-now {
+      font-size: 3.5rem;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 1200px) {
+      .home-hero-title {
+        font-size: 3rem;
+        padding: 25px 85px;
+      }
+
+      .home-hero-title-content,
+      .home-hero-title-book-now {
+        font-size: 3rem;
+      }
+    }
+
+    @media screen and (max-width: 992px) {
+      .home-hero-title {
+        font-size: 2.5rem;
+        padding: 20px 70px;
+      }
+
+      .home-hero-title-content,
+      .home-hero-title-book-now {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .home-hero-title {
+        font-size: 2rem;
+        padding: 15px 55px;
+      }
+
+      .home-hero-title-content,
+      .home-hero-title-book-now {
+        font-size: 2rem;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .home-hero-title {
+        font-size: 1.5rem;
+        padding: 10px 40px;
+      }
+
+      .home-hero-title-content,
+      .home-hero-title-book-now {
+        font-size: 1.5rem;
+      }
+    }
+
+    .home-hero-title-content {
+      display: inline-block;
+      background: linear-gradient(90deg,
+          #9b59b6,
+          /* Lilac */
+          #ff69b4,
+          /* Pink */
+          #9b59b6
+          /* Lilac again to create a seamless loop */
+        );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s ease infinite;
+      transition: opacity 0.3s ease;
+    }
+
+    .home-hero-title-book-now {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(90deg,
+          #FF0000,
+          /* Red */
+          #FF69B4,
+          /* Pink */
+          #FF0000
+          /* Red again to create a seamless loop */
+        );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Hover effects */
+    .home-hero-title:hover {
+      background-color: white;
+    }
+
+    .home-hero-title:hover .home-hero-title-content {
+      opacity: 0;
+    }
+
+    .home-hero-title:hover .home-hero-title-book-now {
+      opacity: 1;
+      animation: gradientShift 6s ease infinite;
+    }
+
+    /* Updated Hero Text Styles */
+    .home-hero-text,
+    .home-hero-text-second-line {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 1200px;
+      padding: 0.5rem;
+      text-align: center;
+      color: white;
+    }
+
+    .home-text10 {
+      position: relative;
+      transform: none;
+      left: auto;
+      margin: 2rem auto;
+      font-size: 2.5rem;
+      font-weight: normal;
+    }
+
+    .home-hero-text {
+      top: 53%;
+    }
+
+    .home-hero-text-second-line {
+      top: 60%;
+    }
+
+    .home-hero-text p,
+    .home-hero-text-second-line p {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 0;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .home-hero-text-highlight {
+      display: inline;
+      background: linear-gradient(90deg,
+          #FF0000,
+          /* Red */
+          #FF69B4,
+          /* Pink */
+          #FF0000
+          /* Red again to create a seamless loop */
+        );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 1200px) {
+
+      .home-hero-text p,
+      .home-hero-text-second-line p,
+      .home-text10 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media screen and (max-width: 992px) {
+
+      .home-hero-text p,
+      .home-hero-text-second-line p,
+      .home-text10 {
+        font-size: 2rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+
+      .home-hero-text p,
+      .home-hero-text-second-line p,
+      .home-text10 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+
+      .home-hero-text p,
+      .home-hero-text-second-line p,
+      .home-text10 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Add these new styles at the end to set max-width and remove white space */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .home-container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .home-home {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0;
+      position: relative;
+    }
+
+    .home-banner {
+      width: 100%;
+      max-width: 1440px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+    }
+
+    @media screen and (max-width: 1440px) {
+
+      .home-container,
+      .home-home,
+      .home-banner {
+        width: 100%;
+      }
+    }
+
+    .home-text10-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      background-color: white;
+    }
+
+    .home-text10 {
+      width: 95%;
+      max-width: 1200px;
+      text-align: center;
+      color: black;
+      font-size: 2.5rem;
+      font-weight: bold;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .home-text10-highlight {
+      position: relative;
+      display: inline-block;
+    }
+
+    .home-text10-highlight::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 3px;
+      background-color: #FF0000;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">PARTY<br>TIME.</a>
+      <ul class="nav-links">
+        <li><a href="work.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="home-hero-container">
+    <img src="public/external/image15137-ma58-1500w.png" alt="Hero image" class="home-image1" />
+    <button class="home-hero-title">
+      <span class="home-hero-title-content">PARTY TIME</span>
+      <span class="home-hero-title-book-now">BOOK NOW</span>
+    </button>
+    <div class="home-hero-text">
+      <p>Elevate Every Event</p>
+    </div>
+    <div class="home-hero-text-second-line">
+      <p>creating <span class="home-hero-text-highlight">unforgettable moments!</span></p>
+    </div>
+  </div>
+
+  <div class="home-text10-container">
+    <span class="home-text10">
+      Transforming moments into <span class="home-text10-highlight">movements</span>. We craft tailored experiences with
+      flair. Let's make your event unforgettable, together!
+    </span>
+  </div>
+
+  <div class="home-main2">
+    <div class="home-frame3">
+      <div class="home-image-container">
+        <img src="public/external/image27145-kjg-500h.png" alt="Service 1" class="home-image">
+        <button class="home-image-button">Weddings</button>
+      </div>
+      <div class="home-image-container">
+        <img src="public/external/tq_m3aykiv8gk-hync-1300w.png" alt="Service 2" class="home-image">
+        <button class="home-image-button">Parties</button>
+      </div>
+      <div class="home-image-container">
+        <img src="public/external/tq_mveyk2nfo5-f8qqh-1300w.png" alt="Service 3" class="home-image">
+        <button class="home-image-button">Outdoor Catering</button>
+      </div>
+      <div class="home-image-container">
+        <img src="public/external/tq_ganwhlmtq3-ohb6-1300w.png" alt="Service 4" class="home-image">
+        <button class="home-image-button">Corporate Events</button>
+      </div>
+      <div class="home-image-container">
+        <img src="public/external/tq_klvyjaeaoq-jn1-1300w.png" alt="Service 5" class="home-image">
+        <button class="home-image-button">Conferences</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">
+      PARTY<br>TIME.
+    </div>
+    <div class="footer-content">
+      <p class="footer-tagline">TRANSFORMING MOMENTS INTO MOVEMENTS</p>
+      <div class="footer-right">
+        <div class="social-links">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i
+              class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><i
+              class="fab fa-youtube"></i></a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i
+              class="fab fa-linkedin"></i></a>
+        </div>
+        <p class="footer-credit">© terrence made this</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>YOUVE HIT ROCK BOTTOM.</p>
+    </div>
+  </footer>
+  <script>
+    document.querySelector('.home-hero-title').addEventListener('click', function () {
+      // Replace with your actual booking page URL
+      window.location.href = 'contact.html';
+    });
+
+    // Add this new code to make buttons link to work.html
+    document.querySelectorAll('.home-frame3 .home-image-button').forEach(button => {
+      button.addEventListener('click', function () {
+        window.location.href = 'work.html';
+      });
+    });
+
+    const navSlide = () => {
+      const burger = document.querySelector('.burger');
+      const nav = document.querySelector('.nav-links');
+      const navLinks = document.querySelectorAll('.nav-links li');
+      const body = document.body;
+
+      burger.addEventListener('click', () => {
+        // Toggle Nav
+        body.classList.toggle('nav-active');
+
+        // Animate Links
+        navLinks.forEach((link, index) => {
+          if (link.style.animation) {
+            link.style.animation = '';
+          } else {
+            link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+          }
+        });
+
+        // Burger Animation
+        burger.classList.toggle('toggle');
+      });
+
+      // Close menu when a link is clicked
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          body.classList.remove('nav-active');
+          burger.classList.remove('toggle');
+          navLinks.forEach(link => {
+            link.style.animation = '';
+          });
+        });
+      });
+    }
+
+    navSlide();
+  </script>
+</body>
+
+</html>

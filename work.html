@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PartyTime Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        
+       /* Header Styles */
+       header {
+            background-color: #151515;
+            padding: 1rem 2rem;
+            position: relative;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ea1d76;
+            line-height: 1;
+            z-index: 2;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+            text-decoration: none;
+        }
+
+        .nav-links li a {
+            color: #d0d0d0;
+            font-size: 20px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-links li a:hover {
+            color: #ea1d76;
+            transform: scale(1.1);
+            display: inline-block;
+            
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            z-index: 1001; /* Ensure it's above the menu */
+            transition: all 0.3s ease;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: #d0d0d0;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                height: 100vh;
+                background: linear-gradient(to bottom, #151515 0%, rgba(21, 21, 21, 0.9) 100%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transform: translateY(-100%);
+                transition: transform 0.5s ease-in;
+                padding: 2rem;
+                z-index: 1000; /* Ensure the menu is above other content */
+            }
+
+            .nav-links li {
+                opacity: 0;
+                margin: 1rem 0;
+            }
+
+            .nav-links li a {
+                color: #f5f4f2;
+                font-size: 24px;
+            }
+
+            .nav-links li a:hover {
+                color: #ea1d76;
+                transform: scale(1.1);
+                display: inline-block;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            .toggle .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+                background-color: #f5f4f2;
+            }
+
+            .toggle .line2 {
+                opacity: 0;
+            }
+
+            .toggle .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+                background-color: #f5f4f2;
+            }
+
+            /* This ensures the menu is hidden by default on mobile */
+            body:not(.nav-active) .nav-links {
+                transform: translateY(-100%);
+                transition: none;
+            }
+
+            /* This animates the menu only when it's actively toggled */
+            body.nav-active .nav-links {
+                transform: translateY(0%);
+                transition: transform 0.5s ease-in;
+            }
+        }
+
+        @keyframes navLinkFade {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #f5f0e8;
+            color: #1c1c1c;
+            position: relative;
+            padding-bottom: 30px;
+            font-size: 14px;
+            border-top: 1px solid #151515;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 0.5rem;
+        }
+
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ea1d76;
+            line-height: 1;
+            position: absolute;
+            bottom: 30px;
+            left: 0.5rem;
+            padding: 0.25rem;
+        }
+
+        .footer-tagline {
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            flex-grow: 1;
+            margin: 0 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 3em;
+            padding: 0.5em;
+            line-height: 1.2;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .social-links {
+            margin-bottom: 0.125rem;
+        }
+
+        .social-links a {
+            color: #1c1c1c;
+            font-size: 16px;
+            margin-left: 5px;
+        }
+
+        .footer-credit {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .footer-bottom {
+            background-color: #151515;
+            color: #f5f4f2;
+            text-align: center;
+            padding: 0.25rem 0;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-bottom p {
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            nav ul li {
+                margin-left: 0;
+                margin-right: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding-top: 60px; /* Add space for the logo at the top */
+            }
+
+            .footer-logo {
+                position: absolute;
+                top: 0.5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: auto;
+                font-size: 16px;
+            }
+
+            .footer-tagline {
+                font-size: 10px;
+                min-height: 2.5em;
+                margin-bottom: 0.5rem;
+            }
+
+            .footer-right {
+                text-align: center;
+            }
+
+            .social-links a {
+                font-size: 14px;
+            }
+
+            .footer-credit,
+            .footer-bottom p {
+                font-size: 9px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .description p, .what-we-do p {
+                font-size: 16px;
+            }
+
+            .feature-image {
+                height: 300px;
+            }
+
+            footer {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            .description p, .what-we-do p {
+                font-size: 14px;
+            }
+
+            .feature-image {
+                height: 250px;
+            }
+
+            footer {
+                font-size: 10px;
+                padding-bottom: 25px;
+            }
+
+            .footer-logo {
+                font-size: 14px;
+            }
+
+            .footer-tagline {
+                font-size: 9px;
+                min-height: 2em;
+            }
+
+            .social-links a {
+                font-size: 12px;
+            }
+
+            .footer-credit,
+            .footer-bottom p {
+                font-size: 8px;
+            }
+
+            .footer-bottom {
+                padding: 0.2rem 0;
+            }
+        }
+
+        .social-links {
+            margin-bottom: 0.125rem;
+        }
+
+        .social-links a {
+            color: #1c1c1c;
+            font-size: 16px;
+            margin-left: 5px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1c1c1c;
+            background-color: #f5f4f2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        
+
+        
+
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #1c1c1c;
+            font-weight: 700;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .service, .package {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .service h3 {
+            background-image: linear-gradient(
+                45deg,
+                #ff0000,
+                #ff69b4,
+                #c8a2c8,
+                #ff0000
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 300% 300%;
+            animation: gradient-animation 5s ease infinite;
+        }
+
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .packages {
+            margin-top: 50px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        footer {
+            
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .banner {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav {
+                margin-top: 20px;
+            }
+
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+
+        .service img {
+            width: calc(100% + 16px);
+            max-width: none;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px 5px 0 0;
+            margin-left: -8px;
+        }
+
+        .service-content {
+            padding-top: 20px;
+        }
+
+        .package h3,
+        .package h4,
+        .package h5 {
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 3s linear infinite;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+        }
+
+        .package h3.bronze {
+            background-image: linear-gradient(45deg, #8B4513, #CD7F32, #DEB887, #CD7F32, #8B4513);
+        }
+
+        .package h4.silver {
+            background-image: linear-gradient(45deg, #C0C0C0, #FFFFFF, #C0C0C0, #FFFFFF, #C0C0C0);
+        }
+
+        .package h5.gold {
+            background-image: linear-gradient(45deg, #FFD700, #FFF8DC, #DAA520, #FFF8DC, #FFD700);
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .packages-section {
+            background-color: #000;
+            padding: 50px 0;
+            margin-top: 50px;
+        }
+
+        .packages-section h2 {
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .package {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+  <header>
+    <nav>
+        <a href="index.html" class="logo">PARTY<br>TIME.</a>
+        <ul class="nav-links">
+            <li><a href="work.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+</header>
+
+    <div class="container">
+      
+
+        <main>
+            <h1>Our Services</h1>
+
+            <div class="services-grid">
+                <div class="service">
+                    <img src="public/external/tq_gfejnm-mnn-fbzl-1500h.png" alt="Wedding">
+                    <div class="service-content">
+                        <h3>Weddings</h3>
+                        <p>Our team excels in infusing rustic charm into every detail, whether you're dreaming of a cozy barn wedding or a romantic outdoor ceremony.</p>
+                    </div>
+                </div>
+                <div class="service">
+                    <img src="public/external/tq_smddvvq_2j-h4j5-1100w.png" alt="Corporate Event">
+                    <div class="service-content">
+                        <h3>Corporate Events</h3>
+                        <p>Let us take the stress out of event planning so you can confidently host a seamless and impactful conference that leaves a lasting impression on your attendees.</p>
+                    </div>
+                </div>
+                <div class="service">
+                    <img src="public/external/tq_djl_ex4nm6-7inr-1100w.png" alt="Themed Event">
+                    <div class="service-content">
+                        <h3>Themed Events</h3>
+                        <p>From concept to execution, our experienced team ensures every event is a seamless success. Let PartyTime turn your dreams into unforgettable moments.</p>
+                    </div>
+                </div>
+                <div class="service">
+                    <img src="public/external/tq_gnb4hd3fj1-3eyh-1500h.png" alt="Entertainment">
+                    <div class="service-content">
+                        <h3>Entertainment</h3>
+                        <p>We offer a wide range of entertainment options to make your event truly memorable, from DJs and live bands to magicians and more.</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="packages-section">
+                <div class="container">
+                    <h2>Our Packages</h2>
+                    <div class="packages-grid">
+                        <div class="package">
+                            <h3 class="bronze">Bronze Package</h3>
+                            <ul>
+                                <li>Room decorations - balloons, banners</li>
+                                <li>Table decorations - centrepieces, gifts</li>
+                                <li>DJ entertainment</li>
+                                <li>Cold buffet</li>
+                            </ul>
+                        </div>
+                        <div class="package">
+                            <h4 class="silver">Silver Package</h4>
+                            <p>All from Bronze package plus:</p>
+                            <ul>
+                                <li>Invitation design and handling</li>
+                                <li>Party cost clear up</li>
+                                <li>Live band entertainment</li>
+                                <li>Cold buffet and soft drinks</li>
+                            </ul>
+                        </div>
+                        <div class="package">
+                            <h5 class="gold">Gold Package</h5>
+                            <p>All from Silver package plus:</p>
+                            <ul>
+                                <li>Staff in attendance to ensure complete perfection</li>
+                                <li>Finding guest accommodation, booking transport</li>
+                                <li>Live band entertainment and magician</li>
+                                <li>Hot and Cold buffet and soft drinks</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+      <div class="footer-logo">
+          PARTY<br>TIME.
+      </div>
+      <div class="footer-content">
+          <p class="footer-tagline">TRANSFORMING MOMENTS INTO MOVEMENTS</p>
+          <div class="footer-right">
+              <div class="social-links">
+                  <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                  <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                  <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+              </div>
+              <p class="footer-credit">© terrence made this</p>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <p>THE END.</p>
+      </div>
+  </footer>
+
+  <script>
+
+    
+    const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+            const body = document.body;
+
+            burger.addEventListener('click', () => {
+                // Toggle Nav
+                body.classList.toggle('nav-active');
+
+                // Animate Links
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
+
+                // Burger Animation
+                burger.classList.toggle('toggle');
+            });
+
+            // Close menu when a link is clicked
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    body.classList.remove('nav-active');
+                    burger.classList.remove('toggle');
+                    navLinks.forEach(link => {
+                        link.style.animation = '';
+                    });
+                });
+            });
+        }
+
+        navSlide();
+  </script>
+</body>
+</html>

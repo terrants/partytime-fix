@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - PARTY TIME</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #000000;
+      background-color: #f5f0e8;
+      /* Beige background color */
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: #151515;
+      padding: 1rem 2rem;
+      position: relative;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      color: #ea1d76;
+      line-height: 1;
+      z-index: 2;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      text-decoration: none;
+    }
+
+    .nav-links li {
+      text-decoration: none;
+    }
+
+    .nav-links li a {
+      color: #d0d0d0;
+      font-size: 20px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .nav-links li a:hover {
+      color: #ea1d76;
+      transform: scale(1.1);
+      display: inline-block;
+    }
+
+    .burger {
+      display: none;
+      cursor: pointer;
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      z-index: 1001;
+      /* Ensure it's above the menu */
+      transition: all 0.3s ease;
+    }
+
+    .burger div {
+      width: 25px;
+      height: 3px;
+      background-color: #d0d0d0;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+
+    @media screen and (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        background: linear-gradient(to bottom, #151515 0%, rgba(21, 21, 21, 0.9) 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(-100%);
+        transition: transform 0.5s ease-in;
+        padding: 2rem;
+        z-index: 1000;
+        /* Ensure the menu is above other content */
+      }
+
+      .nav-links li {
+        opacity: 0;
+        margin: 1rem 0;
+      }
+
+      .nav-links li a {
+        color: #f5f4f2;
+        font-size: 24px;
+      }
+
+      .nav-links li a:hover {
+        color: #ea1d76;
+        transform: scale(1.1);
+        display: inline-block;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .toggle .line1 {
+        transform: rotate(-45deg) translate(-5px, 6px);
+        background-color: #f5f4f2;
+      }
+
+      .toggle .line2 {
+        opacity: 0;
+      }
+
+      .toggle .line3 {
+        transform: rotate(45deg) translate(-5px, -6px);
+        background-color: #f5f4f2;
+      }
+
+      /* This ensures the menu is hidden by default on mobile */
+      body:not(.nav-active) .nav-links {
+        transform: translateY(-100%);
+        transition: none;
+      }
+
+      /* This animates the menu only when it's actively toggled */
+      body.nav-active .nav-links {
+        transform: translateY(0%);
+        transition: transform 0.5s ease-in;
+      }
+    }
+
+    @keyframes navLinkFade {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #f5f0e8;
+      color: #1c1c1c;
+      position: relative;
+      padding-bottom: 30px;
+      font-size: 14px;
+      border-top: 1px solid #151515;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 0.5rem;
+    }
+
+    .footer-logo {
+      font-size: 18px;
+      font-weight: 900;
+      color: #ea1d76;
+      line-height: 1;
+      position: absolute;
+      bottom: 30px;
+      left: 0.5rem;
+      padding: 0.25rem;
+    }
+
+    .footer-tagline {
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      flex-grow: 1;
+      margin: 0 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3em;
+      padding: 0.5em;
+      line-height: 1.2;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+    .social-links {
+      margin-bottom: 0.125rem;
+    }
+
+    .social-links a {
+      color: #1c1c1c;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+
+    .footer-credit {
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .footer-bottom {
+      background-color: #151515;
+      color: #f5f4f2;
+      text-align: center;
+      padding: 0.25rem 0;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .footer-bottom p {
+      font-weight: bold;
+      font-size: 10px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+      }
+
+      nav ul {
+        margin-top: 1rem;
+      }
+
+      nav ul li {
+        margin-left: 0;
+        margin-right: 1rem;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-top: 60px;
+        /* Add space for the logo at the top */
+      }
+
+      .footer-logo {
+        position: absolute;
+        top: 0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: auto;
+        font-size: 16px;
+      }
+
+      .footer-tagline {
+        font-size: 10px;
+        min-height: 2.5em;
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-right {
+        text-align: center;
+      }
+
+      .social-links a {
+        font-size: 14px;
+      }
+
+      .footer-credit,
+      .footer-bottom p {
+        font-size: 9px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .description p,
+      .what-we-do p {
+        font-size: 16px;
+      }
+
+      .feature-image {
+        height: 300px;
+      }
+
+      footer {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 30px;
+      }
+
+      .description p,
+      .what-we-do p {
+        font-size: 14px;
+      }
+
+      .feature-image {
+        height: 250px;
+      }
+
+      footer {
+        font-size: 10px;
+        padding-bottom: 25px;
+      }
+
+      .footer-logo {
+        font-size: 14px;
+      }
+
+      .footer-tagline {
+        font-size: 9px;
+        min-height: 2em;
+      }
+
+      .social-links a {
+        font-size: 12px;
+      }
+
+      .footer-credit,
+      .footer-bottom p {
+        font-size: 8px;
+      }
+
+      .footer-bottom {
+        padding: 0.2rem 0;
+      }
+    }
+
+    nav a {
+      color: #000000;
+      text-decoration: none;
+      padding: 0 10px;
+      font-weight: 500;
+    }
+
+    main {
+      padding: 2rem 0;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      background: linear-gradient(to right,
+          #ff0000,
+          #ff3333,
+          #ff6666,
+          #ff9999,
+          #ffcccc,
+          #ff9999,
+          #ff6666,
+          #ff3333,
+          #ff0000);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: gradient 5s linear infinite;
+    }
+
+    .new-york-title {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      background: linear-gradient(to right,
+          #ff0000,
+          #ff3333,
+          #ff6666,
+          #ff9999,
+          #ffcccc,
+          #ff9999,
+          #ff6666,
+          #ff3333,
+          #ff0000);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: gradient 5s linear infinite;
+    }
+
+    .los-angeles-title {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      background: linear-gradient(to right,
+          #8A2BE2,
+          #9370DB,
+          #BA55D3,
+          #DDA0DD,
+          #EE82EE,
+          #DDA0DD,
+          #BA55D3,
+          #9370DB,
+          #8A2BE2);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: gradient 5s linear infinite;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% center;
+      }
+
+      100% {
+        background-position: 200% center;
+      }
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #000000;
+      background-color: #ffffff;
+      color: #000000;
+      font-family: 'Inter', sans-serif;
+    }
+
+    button {
+      display: inline-block;
+      background: #ff0000;
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    button:hover {
+      background: #cc0000;
+    }
+
+    .offices {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+
+    .office {
+      flex-basis: calc(50% - 1rem);
+      margin-bottom: 1rem;
+      background: #ffffff;
+      padding: 1rem;
+      border: 1px solid #000000;
+    }
+
+    .office img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    footer {
+
+      color: #000000;
+      text-align: center;
+      padding: 1rem 0;
+      margin-top: 2rem;
+      border-top: 1px solid #000000;
+    }
+
+    @media (max-width: 768px) {
+      .office {
+        flex-basis: 100%;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">PARTY<br>TIME.</a>
+      <ul class="nav-links">
+        <li><a href="work.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Contact Us</h1>
+    <p>Want to connect? Fill out the form below:</p>
+
+    <form>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div class="offices">
+      <div class="office">
+        <h2 class="new-york-title">New York Office</h2>
+        <p>32 Mercer St, 5th Floor<br>New York, NY 10013</p>
+        <img src="public/external/nycsvg3834-uykk.svg" alt="New York Office">
+      </div>
+      <div class="office">
+        <h2 class="los-angeles-title">Los Angeles Office</h2>
+        <p>933 N La Brea Ave, 2nd Floor<br>West Hollywood, CA 90038</p>
+        <img src="public/external/losangelessvg3839-0ea7.svg" alt="Los Angeles Office">
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-logo">
+      PARTY<br>TIME.
+    </div>
+    <div class="footer-content">
+      <p class="footer-tagline">TRANSFORMING MOMENTS INTO MOVEMENTS</p>
+      <div class="footer-right">
+        <div class="social-links">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i
+              class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><i
+              class="fab fa-youtube"></i></a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i
+              class="fab fa-linkedin"></i></a>
+        </div>
+        <p class="footer-credit">© terrence made this</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>THE END.</p>
+    </div>
+  </footer>
+</body>
+
+</html>
